@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reglamento</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; background-color: #181818; color: #ececec; margin: 0; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: #212121; padding: 20px; border-radius: 12px; }
+        h1 { color: #ff4500; text-align: center; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px 0; border-bottom: 1px solid #333; }
+        .error { color: #ff4500; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <h1 id="titulo">Cargando...</h1>
+    <ul id="lista"></ul>
+</div>
+
+<script>
+    const reglamentos = {
+        "1": {
+            titulo: "Reglamento 1",
+            items: ["Al ingresar <b>Preséntate</b>", "<b>PROHIBIDO FOTOPITOS</b>", "<b>NO CP, Gore, Zoo ni Material Pornografico ilegal</b>", "Prohibido <b>Anunciar, Vender o Compartir links sin autorización</b>", "No Morbo, NvXNv, Chantajes, Hackeos, <b>fotopollas por error</b>", "No acoses pidiendo <b>PV o Agg</b>", "Material <b>+18 propio</b> permitido (se borrará)", "Si no estás activo → <b>Expulsión</b>", "No confundas <b>cotorreo con bullying</b>"]
+        },
+        "2": {
+            titulo: "Reglamento 2",
+            items: ["Al ingresar no esperes ser el centro de atención", "<b>PROHIBIDO FOTOPITOS</b>", "<b>NO CP, Gore, Zoo ni material ilegal</b>", "Prohibido <b>Anunciar o Vender sin permiso/verificación</b>", "No Morbo, NvXNv, Chantajes, Hackeos", "No acoses pidiendo <b>PV o Agg</b>", "¿Vendes contenido? → <b>Pide permiso a un Admin y verifícate</b>", "Material <b>+18 propio</b> permitido (se borrará)", "Si no estás activo → <b>Expulsión</b>", "Compras bajo tu <b>propio riesgo</b>"]
+        }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get('tipo'); // Captura el número del reglamento
+    const contenido = reglamentos[tipo];
+
+    if (contenido) {
+        document.getElementById('titulo').innerText = contenido.titulo;
+        const lista = document.getElementById('lista');
+        contenido.items.forEach(item => {
+            let li = document.createElement('li');
+            li.innerHTML = "💀 " + item;
+            lista.appendChild(li);
+        });
+    } else {
+        document.getElementById('titulo').innerText = "Error";
+        document.getElementById('lista').innerHTML = "<li class='error'>Reglamento no especificado. Usa ?tipo=1 o ?tipo=2 en el enlace.</li>";
+    }
+</script>
+</body>
+</html>
