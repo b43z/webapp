@@ -34,7 +34,7 @@
     };
 
     const params = new URLSearchParams(window.location.search);
-    const tipo = params.get('tipo'); // Captura el número del reglamento
+    const tipo = params.get('tipo'); 
     const contenido = reglamentos[tipo];
 
     if (contenido) {
@@ -47,7 +47,7 @@
         });
     } else {
         document.getElementById('titulo').innerText = "Error";
-        document.getElementById('lista').innerHTML = "<li class='error'>Reglamento no especificado. Usa ?tipo=1 o ?tipo=2 en el enlace.</li>";
+        document.getElementById('lista').innerHTML = "<li class='error'>Reglamento no especificado.</li>";
     }
 </script>
 </body>
