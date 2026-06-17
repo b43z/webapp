@@ -1,54 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reglamento</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: sans-serif; background-color: #181818; color: #ececec; margin: 0; padding: 20px; }
-        .container { max-width: 500px; margin: auto; background: #212121; padding: 20px; border-radius: 12px; }
-        h1 { color: #ff4500; text-align: center; }
-        ul { list-style: none; padding: 0; }
-        li { padding: 10px 0; border-bottom: 1px solid #333; }
-        .error { color: #ff4500; text-align: center; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Federación CORVUS</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      margin: 0;
+      font-family: "Georgia", serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      font-size: clamp(1.5em, 5vw, 3em);
+      color: #c00;
+      padding: 15px;
+      text-align: center;
+      text-shadow: 0 0 6px #900;
+    }
+    .imagen {
+      width: 100%;
+      max-width: 800px;
+      margin: 10px auto;
+      border: 3px solid #c00;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    .imagen img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      font-size: clamp(1em, 3vw, 1.3em);
+    }
+    ul li {
+      margin: 8px 0;
+      padding: 6px;
+      background: rgba(30,30,30,0.8);
+      border-left: 3px solid #c00;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+    }
+    ul li::before {
+      content: "🪶";
+      margin-right: 8px;
+      color: #c00;
+      font-size: 1.2em;
+    }
+    footer {
+      margin-top: 3em; /* separación de tres líneas aprox */
+      padding: 15px;
+      font-style: italic;
+      font-size: clamp(0.9em, 2.5vw, 1.2em);
+      color: #aaa;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <header>Federación CORVUS</header>
+  
+  <div class="imagen">
+    <img src="corvus.png" alt="Raven CORVUS">
+  </div>
+  
+  <ul>
+    <li>Sin Pedofilia</li>
+    <li>Sin Racismo</li>
+    <li>Sin Bullying</li>
+    <li>Sin Pornografía Ilícita</li>
+  </ul>
 
-<div class="container" id="app">
-    <h1 id="titulo">Cargando...</h1>
-    <ul id="lista"></ul>
-</div>
-
-<script>
-    const reglamentos = {
-        "1": {
-            titulo: "Reglamento 1",
-            items: ["Al ingresar <b>Preséntate</b>", "<b>PROHIBIDO FOTOPITOS</b>", "<b>NO CP, Gore, Zoo ni Material Pornografico ilegal</b>", "Prohibido <b>Anunciar, Vender o Compartir links sin autorización</b>", "No Morbo, NvXNv, Chantajes, Hackeos, <b>fotopollas por error</b>", "No acoses pidiendo <b>PV o Agg</b>", "Material <b>+18 propio</b> permitido (se borrará)", "Si no estás activo → <b>Expulsión</b>", "No confundas <b>cotorreo con bullying</b>"]
-        },
-        "2": {
-            titulo: "Reglamento 2",
-            items: ["Al ingresar no esperes ser el centro de atención", "<b>PROHIBIDO FOTOPITOS</b>", "<b>NO CP, Gore, Zoo ni material ilegal</b>", "Prohibido <b>Anunciar o Vender sin permiso/verificación</b>", "No Morbo, NvXNv, Chantajes, Hackeos", "No acoses pidiendo <b>PV o Agg</b>", "¿Vendes contenido? → <b>Pide permiso a un Admin y verifícate</b>", "Material <b>+18 propio</b> permitido (se borrará)", "Si no estás activo → <b>Expulsión</b>", "Compras bajo tu <b>propio riesgo</b>"]
-        }
-    };
-
-    const params = new URLSearchParams(window.location.search);
-    const tipo = params.get('tipo'); 
-    const contenido = reglamentos[tipo];
-
-    if (contenido) {
-        document.getElementById('titulo').innerText = contenido.titulo;
-        const lista = document.getElementById('lista');
-        contenido.items.forEach(item => {
-            let li = document.createElement('li');
-            li.innerHTML = "💀 " + item;
-            lista.appendChild(li);
-        });
-    } else {
-        document.getElementById('titulo').innerText = "Error";
-        document.getElementById('lista').innerHTML = "<li class='error'>Reglamento no especificado.</li>";
-    }
-</script>
+  <footer>
+    EL ojo que vigila en la penumbra localizando amenazas y tomando acciones para salvaguardar
+  </footer>
 </body>
 </html>
