@@ -5,68 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Federación CORVUS</title>
   <style>
-    body {
-      background: #000;
-      color: #fff;
-      margin: 0;
-      font-family: "Georgia", serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    header {
-      font-size: clamp(1.5em, 5vw, 3em);
-      color: #c00;
-      padding: 15px;
-      text-align: center;
-      text-shadow: 0 0 6px #900;
-    }
-    .imagen {
-      width: 100%;
-      max-width: 800px;
-      margin: 10px auto;
-      border: 3px solid #c00;
-      border-radius: 8px;
-      box-sizing: border-box;
-    }
-    .imagen img {
-      width: 100%;
-      height: auto;
-      border-radius: 6px;
-      display: block;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 600px;
-      font-size: clamp(1em, 3vw, 1.3em);
-    }
-    ul li {
-      margin: 8px 0;
-      padding: 6px;
-      background: rgba(30,30,30,0.8);
-      border-left: 3px solid #c00;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-    }
-    ul li::before {
-      content: "🪶";
-      margin-right: 8px;
-      color: #c00;
-      font-size: 1.2em;
-    }
-    footer {
-      margin-top: 3em; /* separación de tres líneas aprox */
-      padding: 15px;
-      font-style: italic;
-      font-size: clamp(0.9em, 2.5vw, 1.2em);
-      color: #aaa;
-      text-align: center;
-    }
+    body { background: #000; color: #fff; margin: 0; font-family: "Georgia", serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    header { font-size: clamp(1.5em, 5vw, 3em); color: #c00; padding: 15px; text-align: center; text-shadow: 0 0 6px #900; }
+    .imagen { width: 100%; max-width: 800px; margin: 10px auto; border: 3px solid #c00; border-radius: 8px; box-sizing: border-box; }
+    .imagen img { width: 100%; height: auto; border-radius: 6px; display: block; }
+    ul { list-style: none; padding: 0; margin: 20px auto; width: 90%; max-width: 600px; font-size: clamp(1em, 3vw, 1.3em); }
+    ul li { margin: 8px 0; padding: 6px; background: rgba(30,30,30,0.8); border-left: 3px solid #c00; border-radius: 4px; display: flex; align-items: center; }
+    ul li::before { content: "🪶"; margin-right: 8px; color: #c00; font-size: 1.2em; }
+    
+    /* ESTILOS DEL FORMULARIO */
+    #admin-form { margin-top: 20px; background: #1a1a1a; padding: 20px; border-radius: 8px; width: 80%; max-width: 400px; text-align: center; border: 1px solid #444; }
+    input { padding: 10px; width: 90%; margin-bottom: 15px; border-radius: 4px; border: none; }
+    button { padding: 10px 15px; margin: 5px; cursor: pointer; border: none; border-radius: 4px; font-weight: bold; }
+    .btn-add { background: #c00; color: white; }
+    .btn-del { background: #444; color: white; }
   </style>
 </head>
 <body>
@@ -83,8 +35,46 @@
     <li>Sin Pornografía Ilícita</li>
   </ul>
 
+  <div id="admin-form">
+    <input type="password" id="pass" placeholder="Contraseña de Administrador">
+    <br>
+    <button class="btn-add" onclick="ejecutar('add')">Registrar Grupo</button>
+    <button class="btn-del" onclick="ejecutar('del')">Eliminar Grupo</button>
+  </div>
+
   <footer>
     EL ojo que vigila en la penumbra localizando amenazas y tomando acciones para salvaguardar
   </footer>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    function ejecutar(accion) {
+        const password = document.getElementById('pass').value;
+        const chatId = tg.initDataUnsafe.chat?.id;
+
+        if (!chatId) {
+            tg.showPopup({ title: 'Error', message: 'No se pudo detectar el chat. Abre la WebApp desde el grupo.' });
+            return;
+        }
+
+        // REEMPLAZA ESTA URL POR LA DE TU RAILWAY
+        fetch('https://TU-PROYECTO.up.railway.app/api/gestionar-grupo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accion, password, chatId: String(chatId) })
+        })
+        .then(res => res.json())
+        .then(data => {
+            tg.showPopup({ title: 'Respuesta del Sistema', message: data.mensaje });
+            if (data.mensaje.includes('✅') || data.mensaje.includes('🗑️')) {
+                setTimeout(() => tg.close(), 1500);
+            }
+        })
+        .catch(err => tg.showPopup({ title: 'Error', message: 'No se pudo conectar al servidor.' }));
+    }
+  </script>
 </body>
 </html>
